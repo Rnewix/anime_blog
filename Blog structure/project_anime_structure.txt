@@ -1,0 +1,65 @@
+
+
+index
+	-logo
+	-search field
+	-nav bar
+	-sidebar
+post
+new realese
+
+animes_list
+anime_details
+anime_new_realese
+anime_next_realese
+blogs_list
+blog_read
+Users_list
+User_see
+
+
+------------------------
+	-second navbar
+	
+login/create
+
+
+mypage
+
+	-cambio de info/password
+	-delete
+i want to see
+i am watching
+i finished
+
+
+
+
+
+
+
+/
+
+/anime
+/anime/###
+/anime/new
+/anime/future
+
+/blogs
+/blogs/
+
+/users/
+/users/###
+
+/main_user
+/main_user/accounts.........
+
+
+
+
+----------------------
+---------------------
+amigos
+grupos
+carrito de compra
+los mas populares
