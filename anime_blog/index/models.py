@@ -61,10 +61,10 @@ class Anime(models.Model):
     episode = models.PositiveSmallIntegerField(null=True, blank=True)
     release_date = models.DateField(null=True, blank=True)
     description = models.TextField(blank=True)
-    image=models.ImageField(upload_to='images/', null=True, blank=True)                                   
-    genre = models.ForeignKey(Anime_genre, on_delete=models.PROTECT, null=True, blank=True)
-    label = models.ManyToManyField(Anime_label, through='Anime_Animelabel', blank=True)
-    artist = models.ManyToManyField(Artist, through='Anime_Artist', blank=True)
+    image = models.ImageField(upload_to='images/', null=True, blank=True)                                   
+    label = models.ManyToManyField(Anime_label, through='Anime_Animelabel', blank=True)     ######Tabla intermedia muchos a muchos manual o esta auto creada por django
+    artist = models.ManyToManyField(Artist, through='Anime_Artist', blank=True)             ######Tabla intermedia muchos a muchos manual o esta auto creada por django
+    genre = models.ManyToManyField(Anime_genre, through='Anime_Animegenre', blank=True)     ######Tabla intermedia muchos a muchos manual o esta auto creada por django
     
     def __str__(self):
         return self.name
@@ -80,6 +80,12 @@ class Anime_Artist(models.Model):
     #Join table-model for relation Anime - Artist
     anime = models.ForeignKey(Anime, on_delete=models.CASCADE)
     artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
+
+
+class Anime_Animegenre(models.Model):
+    #Join table-model for relation Anime - Anime_genre
+    anime = models.ForeignKey(Anime, on_delete=models.CASCADE)
+    anime_genre = models.ForeignKey(Anime_genre, on_delete=models.CASCADE)
 
 
 class Activity(models.Model):
@@ -124,8 +130,13 @@ class Post_category(models.Model):
 class Post(models.Model):
     content = models.TextField()
     date = models.DateTimeField(auto_now_add = True)
+#    created = models.DateTimeField(auto_now_add=True)
+#    updated = models.DateTimeField(auto_now=True)
+#    title = models.CharField(max_length=50)
+#    body = models.TextField()
     views = models.PositiveSmallIntegerField(default=0)
     user = models.ForeignKey(User, on_delete=models.SET_DEFAULT, default= 1)                                    ###### Corregir usuario default
+#    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     category = models.ForeignKey(Post_category, on_delete=models.SET_NULL, null=True, blank=True)
     label = models.ManyToManyField(Post_label, through='Post_Postlabel', blank=True)
     
@@ -134,9 +145,14 @@ class Post(models.Model):
 
 class Comments(models.Model):
     comment = models.TextField()
+#    body = models.TextField()
+    date = models.DateTimeField(auto_now_add = True)
+#    created = models.DateTimeField(auto_now_add=True)
+#    updated = models.DateTimeField(auto_now=True)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.SET_DEFAULT, default= "anonymous")
-    
+#    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
     def __str__(self):
         return self.user + ' comment ' + self.date + '' + self.id
 
